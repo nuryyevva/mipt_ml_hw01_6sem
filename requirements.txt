@@ -1,7 +1,7 @@
-torch==1.13.1
-torchvision==0.14.1
-tqdm==4.64.1
-pytest==7.2.1
-wandb
-urlib3==1.26.11
-dvc==2.10.2
+torch==2.6.0
+torchvision==0.21.0
+tqdm==4.67.1
+pytest==8.3.4
+wandb==0.19.6
+urllib3==2.3.0
+dvc==3.59.1
