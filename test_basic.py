@@ -6,14 +6,14 @@ from train import compute_accuracy
 
 def test_arange_elems():
     arr = torch.arange(0, 10, dtype=torch.float)
-    assert torch.allclose(arr[-1], torch.tensor([9]))
+    assert torch.allclose(arr[-1], torch.tensor([9.0]))
 
 
 def test_div_zero():
     a = torch.zeros(1, dtype=torch.long)
     b = torch.ones(1, dtype=torch.long)
 
-    assert torch.isfinite(b / a)
+    assert torch.isinf(b / a)
 
 
 def test_div_zero_python():
@@ -38,7 +38,7 @@ def test_accuracy():
     [
         (torch.tensor([1, 2, 3]), torch.tensor([1, 2, 3]), 1.0),
         (torch.tensor([1, 2, 3]), torch.tensor([0, 0, 0]), 0.0),
-        (torch.tensor([1, 2, 3]), torch.tensor([1, 2, 0]), 2 / 5),
+        (torch.tensor([1, 2, 3]), torch.tensor([1, 2, 0]), 2 / 3),
     ],
 )
 def test_accuracy_parametrized(preds, targets, result):
