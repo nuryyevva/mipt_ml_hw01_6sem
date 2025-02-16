@@ -8,7 +8,7 @@ from tqdm import tqdm, trange
 
 from hparams import config
 
-wandb.init(config=config, project="effdl_example", name="baseline")
+wandb.init(config=config, project="mipt_ml_hw01_6sem_project", name="baseline")
 
 
 def compute_accuracy(preds, targets):
