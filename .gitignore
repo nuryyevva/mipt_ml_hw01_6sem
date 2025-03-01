@@ -133,3 +133,4 @@ dmypy.json
 # OTHER
 student_homeworks/
 wandb
+data
