@@ -1,0 +1,20 @@
+[run]
+# Specify the source directory for coverage
+source = src
+
+# Exclude specific files or directories from coverage
+omit =
+    **/__init__.py
+    src/hparams.py
+    src/prepare_data.py
+
+[report]
+# Fail if coverage is below 80%
+fail_under = 80
+
+# Exclude lines from coverage reports
+exclude_lines =
+    # Exclude lines with pragma: no cover
+    pragma: no cover
+    # Exclude lines with "if __name__ == .__main__.:"
+    if __name__ == .__main__.:
