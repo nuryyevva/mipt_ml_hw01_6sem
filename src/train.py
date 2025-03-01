@@ -47,7 +47,7 @@ def main():
         dataset=test_dataset, batch_size=config["batch_size"]
     )
 
-    device = torch.device("cuda")
+    device = torch.device("cpu")
 
     model = resnet18(
         pretrained=False,
