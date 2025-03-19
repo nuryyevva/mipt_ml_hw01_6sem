@@ -8,7 +8,7 @@ from torchvision.models import resnet18
 from hparams import config
 
 
-def compute_metrics():
+def compute_metrics() -> None:
     """
     Compute the accuracy of the trained model on the CIFAR-10 test dataset.
     The model is loaded from 'model.pt', and the accuracy is saved to 'final_metrics.json'.
