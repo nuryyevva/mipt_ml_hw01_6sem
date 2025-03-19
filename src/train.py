@@ -93,7 +93,7 @@ def get_model(device: torch.device) -> nn.Module:
     :return: The ResNet-18 model configured for CIFAR-10 classification.
     """
     model = resnet18(
-        pretrained=False,  # Do not use pre-trained weights
+        weights=None,  # Do not use pre-trained weights
         num_classes=10,  # Number of output classes (CIFAR-10 has 10 classes)
         zero_init_residual=config[
             "zero_init_residual"

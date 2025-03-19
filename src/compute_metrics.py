@@ -39,7 +39,7 @@ def compute_metrics() -> None:
     device = torch.device("cpu")
 
     # Load the pre-trained ResNet-18 model with 10 output classes (for CIFAR-10)
-    model = resnet18(pretrained=False, num_classes=10)
+    model = resnet18(weights=None, num_classes=10)
     model.load_state_dict(
         torch.load("model.pt")
     )  # Load the model weights from the saved file 'model.pt'
