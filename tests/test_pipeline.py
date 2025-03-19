@@ -114,12 +114,8 @@ def test_training(
     assert 0 <= accuracy <= 1  # Accuracy should be between 0 and 1
 
     # Mock Wandb to avoid logging to the cloud
-    with patch("train.wandb.init") as mock_wandb_init, patch(
-        "train.wandb.log"
-    ) as mock_wandb_log:
+    with patch("train.wandb.log") as mock_wandb_log:
         train()
-
-        mock_wandb_init.assert_called_once()  # Verify that Wandb functions were called
         assert mock_wandb_log.call_count > 0  # Ensure metrics were logged
 
     # Verify that the model file was saved

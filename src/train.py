@@ -9,6 +9,9 @@ from tqdm import tqdm, trange
 from hparams import config
 
 
+wandb.init(config=config, project="mipt_ml_hw01_6sem_project", name="baseline")
+
+
 def compute_accuracy(preds: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
     """
     Compute accuracy given predictions and targets.
@@ -177,9 +180,6 @@ def train() -> None:
     Initializes Wandb, loads datasets, trains the model, evaluates it periodically,
     and saves the trained model and Wandb run ID.
     """
-    wandb.init(
-        config=config, project="mipt_ml_hw01_6sem_project", name="baseline"
-    )  # Initialize Wandb for tracking
     train_dataset, test_dataset = get_datasets()
     train_loader, test_loader = get_dataloaders(
         train_dataset, test_dataset, config["batch_size"]
