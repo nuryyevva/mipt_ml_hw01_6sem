@@ -1,14 +1,41 @@
+###########################
+# Python-specific files   #
+###########################
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
 # Pyre type checker
 .idea
 
-# OTHER
-wandb
-data
-CIFAR10
+
+###########################
+# DVC-specific files      #
+###########################
+# DVC internal files
+/.dvc
+dvc.lock
+
+
+###########################
+# Data and model files    #
+###########################
+# Data directories
+data/
+CIFAR10/
+
+# Model checkpoint files
 *.pt
 *.pth
-run_id.txt
+
+
+###########################
+# Logs and temporary files#
+###########################
+# Weights & Biases logs
+wandb/
+
+# Test coverage files
 .coverage
+
+# Run ID file
+run_id.txt
