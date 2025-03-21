@@ -75,14 +75,10 @@ def get_dataloaders(
     test_loader = None
 
     if train_dataset is not None:
-        train_loader = torch.utils.data.DataLoader(
-            dataset=train_dataset, batch_size=batch_size, shuffle=True
-        )
+        train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 
     if test_dataset is not None:
-        test_loader = torch.utils.data.DataLoader(
-            dataset=test_dataset, batch_size=batch_size
-        )
+        test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size)
 
     return train_loader, test_loader
 
@@ -98,9 +94,7 @@ def get_model(device: torch.device) -> nn.Module:
     model = resnet18(
         weights=None,  # Do not use pre-trained weights
         num_classes=10,  # Number of output classes (CIFAR-10 has 10 classes)
-        zero_init_residual=config[
-            "zero_init_residual"
-        ],  # Use zero initialization for residual blocks if specified
+        zero_init_residual=config["zero_init_residual"],  # Use zero initialization for residual blocks if specified
     )
     model.to(device)
     wandb.watch(model)
@@ -161,9 +155,7 @@ def evaluate(
 
         with torch.inference_mode():  # Disable gradient computation for evaluation
             outputs = model(test_images)  # Forward pass: compute predictions
-            preds = torch.argmax(
-                outputs, 1
-            )  # Get the predicted class labels (indices of the maximum logits)
+            preds = torch.argmax(outputs, 1)  # Get the predicted class labels (indices of the maximum logits)
 
             all_preds.append(preds)
             all_labels.append(test_labels)
@@ -181,16 +173,12 @@ def train() -> None:
     and saves the trained model and Wandb run ID.
     """
     train_dataset, test_dataset = get_datasets()
-    train_loader, test_loader = get_dataloaders(
-        train_dataset, test_dataset, config["batch_size"]
-    )
+    train_loader, test_loader = get_dataloaders(train_dataset, test_dataset, config["batch_size"])
 
     device = torch.device("cpu")
     model = get_model(device)  # Initialize the model
 
-    criterion = (
-        nn.CrossEntropyLoss()
-    )  # Define the loss function (CrossEntropyLoss for classification)
+    criterion = (nn.CrossEntropyLoss())  # Define the loss function (CrossEntropyLoss for classification)
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=config["learning_rate"],
@@ -198,21 +186,16 @@ def train() -> None:
     )  # Define the optimizer (AdamW with learning rate and weight decay from config)
 
     for epoch in trange(config["epochs"]):  # Loop over the number of epochs
-        for i, (images, labels) in enumerate(
-            tqdm(train_loader)
-        ):  # Loop over batches in the training DataLoader
+        for i, (images, labels) in enumerate(tqdm(train_loader)):  # Loop over batches in the training DataLoader
             loss = train_one_batch(model, images, labels, criterion, optimizer, device)
 
             # Evaluate the model every 100 batches
             if i % 100 == 0:
-                accuracy = evaluate(
-                    model, test_loader, device
-                )  # Compute accuracy on the test set
+                accuracy = evaluate(model, test_loader, device)  # Compute accuracy on the test set
                 metrics = {"test_acc": accuracy, "train_loss": loss}  # Log metrics
                 wandb.log(
                     metrics,
-                    step=epoch * len(train_dataset)
-                    + (i + 1) * config["batch_size"],  # Log step in Wandb
+                    step=epoch * len(train_dataset) + (i + 1) * config["batch_size"],  # Log step in Wandb
                 )
 
     torch.save(model.state_dict(), "model.pt")  # Save the trained model

@@ -52,9 +52,7 @@ def model() -> torch.nn.Module:
 def test_train_dataset(train_dataset: CIFAR10):
     """Test that the train dataset is loaded correctly."""
     assert len(train_dataset) == 50000  # CIFAR10 train set has 50,000 images
-    assert isinstance(
-        train_dataset[0][0], torch.Tensor
-    )  # Check that images are tensors
+    assert isinstance(train_dataset[0][0], torch.Tensor)  # Check that images are tensors
     assert isinstance(train_dataset[0][1], int)  # Check that labels are integers
 
 

@@ -32,22 +32,16 @@ def compute_metrics() -> None:
     )
 
     # Create a DataLoader for the test dataset
-    test_loader = torch.utils.data.DataLoader(
-        dataset=test_dataset, batch_size=config["batch_size"]
-    )
+    test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=config["batch_size"])
 
     device = torch.device("cpu")
 
     # Load the pre-trained ResNet-18 model with 10 output classes (for CIFAR-10)
     model = resnet18(weights=None, num_classes=10)
-    model.load_state_dict(
-        torch.load("model.pt")
-    )  # Load the model weights from the saved file 'model.pt'
+    model.load_state_dict(torch.load("model.pt"))  # Load the model weights from the saved file 'model.pt'
     model.to(device)  # Move the model to the specified device
 
-    correct = (
-        0.0  # Initialize a variable to keep track of the number of correct predictions
-    )
+    correct = 0.0  # Initialize a variable to keep track of the number of correct predictions
 
     for test_images, test_labels in test_loader:
         test_images = test_images.to(device)
@@ -55,15 +49,9 @@ def compute_metrics() -> None:
 
         # Perform inference (no gradient computation)
         with torch.inference_mode():
-            outputs = model(
-                test_images
-            )  # Forward pass: compute the model's predictions
-            preds = torch.argmax(
-                outputs, 1
-            )  # Get the predicted class labels (indices of the maximum logits)
-            correct += (
-                preds == test_labels
-            ).sum()  # Count the number of correct predictions
+            outputs = model(test_images)  # Forward pass: compute the model's predictions
+            preds = torch.argmax(outputs, 1)  # Get the predicted class labels (indices of the maximum logits)
+            correct += (preds == test_labels).sum()  # Count the number of correct predictions
 
     accuracy = correct / len(test_dataset)
 

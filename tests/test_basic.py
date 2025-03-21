@@ -53,6 +53,4 @@ def test_accuracy_parametrized(preds: torch.Tensor, targets: torch.Tensor, resul
     :param targets: Tensor of ground truth labels.
     :param result: Expected accuracy value.
     """
-    assert torch.allclose(
-        compute_accuracy(preds, targets), torch.tensor([result]), rtol=0, atol=1e-5
-    )
+    assert torch.allclose(compute_accuracy(preds, targets), torch.tensor([result]), rtol=0, atol=1e-5)
